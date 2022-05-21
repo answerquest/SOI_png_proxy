@@ -34,7 +34,7 @@ app.add_middleware(
 
 
 @app.get("/{z}/{x}/{y}.png", tags=["tiles"])
-def webp2png(z:int, x:int, y:int, response_class="StreamingResponse"):
+def webp2png(z:int, x:int, y:int):
     # sample: https://storage.googleapis.com/soi_data/export/tiles/15/23460/14022.webp
     
     # handle invalid requests without bothering to hit the orig server,

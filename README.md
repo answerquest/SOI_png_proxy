@@ -1,5 +1,8 @@
 ## SOI PNG proxy
 
+API Doc (swagger): http://localhost:5520/docs
+
+Can test the tile URL quickly on https://geojson.io (Meta -> Add map layer)
 
 On local:  
 http://localhost:5520/{z}/{x}/{y}.png  
