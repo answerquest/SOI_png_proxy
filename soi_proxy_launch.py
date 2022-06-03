@@ -78,6 +78,10 @@ def proxywebp(z:int, x:int, y:int):
         raise HTTPException(status_code=406)
     url = f"https://storage.googleapis.com/soi_data/export/tiles/{z}/{x}/{y}.webp"
     r = requests.get(url)
+
+    if r.status_code != 200:
+        raise HTTPException(status_code=r.status_code)
+    
     inp_f = io.BytesIO(r.content)
     response = StreamingResponse(content=inp_f, media_type="image/webp")
     global CACHE_DAYS
