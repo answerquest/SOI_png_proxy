@@ -70,3 +70,17 @@ def webp2png(z:int, x:int, y:int):
     return response
 
 
+@app.get("/{z}/{x}/{y}.webp", tags=["tiles"])
+def proxywebp(z:int, x:int, y:int):
+    # handle invalid requests without bothering to hit the orig server,
+    # like: https://server.nikhilvj.co.in/soiproxy/17/92954/58146.png
+    if z > 15 or z <4:
+        raise HTTPException(status_code=406)
+    url = f"https://storage.googleapis.com/soi_data/export/tiles/{z}/{x}/{y}.webp"
+    r = requests.get(url)
+    inp_f = io.BytesIO(r.content)
+    response = StreamingResponse(content=inp_f, media_type="image/webp")
+    global CACHE_DAYS
+    response.headers['Cache-Control'] = f"max-age={CACHE_DAYS*24*3600}"
+
+    return response
